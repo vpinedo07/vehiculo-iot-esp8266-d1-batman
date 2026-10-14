@@ -1,0 +1,10 @@
+
+{
+  "name": "hola-mundo-node",
+  "version": "1.0.0",
+  "description": "Mi primera aplicación Node.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
