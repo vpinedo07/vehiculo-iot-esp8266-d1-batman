@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const swaggerUi = require("swagger-ui-express");
+const { createOpenApiDocument } = require("./docs/openapi");
 
 const { VehicleRepository } = require("./repositories/vehicle-repository");
 const { CommandRepository } = require("./repositories/command-repository");
@@ -80,6 +82,29 @@ function createApp({ database, config }) {
     void request;
     response.sendFile(path.resolve(process.cwd(), "index.html"));
   });
+
+  const openApiDocument = createOpenApiDocument(config.apiPrefix);
+  app.get("/api-docs/openapi.json", (request, response) => {
+    void request;
+    response.json(openApiDocument);
+  });
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(openApiDocument, {
+      customSiteTitle: "Vehículo IoT API | Swagger UI",
+      customCss: ".swagger-ui .topbar { background-color: #111827; }",
+      swaggerOptions: {
+        docExpansion: "list",
+        filter: true,
+        displayRequestDuration: true,
+        operationsSorter: "method",
+        supportedSubmitMethods: config.swaggerWriteEnabled
+          ? ["get", "post", "put", "patch", "delete"]
+          : ["get"],
+      },
+    }),
+  );
 
   app.use(config.apiPrefix, createHealthRouter(database));
   app.use(config.apiPrefix, createVehicleRouter(controllers.vehicleController));

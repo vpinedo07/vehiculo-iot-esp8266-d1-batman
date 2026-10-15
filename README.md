@@ -45,6 +45,8 @@ Ruta -> Controlador -> Servicio -> Repositorio -> Stored Procedure -> MySQL
    ```
 
 La aplicación queda disponible en `http://localhost:3000`.
+Swagger UI queda disponible en `http://localhost:3000/api-docs` y la
+especificación JSON en `http://localhost:3000/api-docs/openapi.json`.
 
 ## Despliegue en Hostinger
 
@@ -55,6 +57,11 @@ aplicación y MySQL estén realmente en el mismo servidor.
 
 Si Hostinger exige TLS, establece `DB_SSL=true`. Cuando proporcione un
 certificado CA, codifícalo en Base64 y guárdalo en `DB_SSL_CA_BASE64`.
+
+En producción, Swagger UI permite ejecutar únicamente solicitudes `GET` por
+defecto. Para habilitar deliberadamente operaciones que modifican datos,
+configura `SWAGGER_WRITE_ENABLED=true`. La documentación seguirá mostrando
+todos los endpoints aunque la ejecución de escrituras esté deshabilitada.
 
 ## Endpoints
 

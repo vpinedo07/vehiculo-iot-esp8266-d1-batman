@@ -26,14 +26,20 @@ function requiredEnvironment(name) {
 }
 
 function getAppConfig() {
+  const environment = process.env.NODE_ENV ?? "development";
+
   return {
-    environment: process.env.NODE_ENV ?? "development",
+    environment,
     port: integerFromEnvironment("PORT", 3000),
     apiPrefix: process.env.API_PREFIX ?? "/api/v1",
     corsOrigins: (process.env.CORS_ORIGINS ?? "http://localhost:3000")
       .split(",")
       .map((origin) => origin.trim())
       .filter(Boolean),
+    swaggerWriteEnabled: booleanFromEnvironment(
+      "SWAGGER_WRITE_ENABLED",
+      environment !== "production",
+    ),
   };
 }
 
