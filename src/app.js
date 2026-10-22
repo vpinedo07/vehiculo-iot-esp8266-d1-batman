@@ -99,9 +99,7 @@ function createApp({ database, config }) {
         filter: true,
         displayRequestDuration: true,
         operationsSorter: "method",
-        supportedSubmitMethods: config.swaggerWriteEnabled
-          ? ["get", "post", "put", "patch", "delete"]
-          : ["get"],
+        supportedSubmitMethods: ["get", "put"],  // config.swaggerWriteEnabled           ? ["get", "post", "put", "patch", "delete"]           : ["get"],
       },
     }),
   );
